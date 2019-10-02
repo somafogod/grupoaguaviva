@@ -53,7 +53,22 @@ If you have PHP installed locally and you would like to use PHP's built-in devel
 $php artisan serve
 
 
+/////////////////////////if don't run apache
+Apache
 
+Laravel includes a public/.htaccess file that is used to provide URLs without the index.php front controller in the path. Before serving Laravel with Apache, be sure to enable the mod_rewrite module so the .htaccess file will be honored by the server.
+
+If the .htaccess file that ships with Laravel does not work with your Apache installation, try this alternative:
+
+Options +FollowSymLinks -Indexes
+RewriteEngine On
+
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
 
 
 
